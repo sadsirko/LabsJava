@@ -1,15 +1,20 @@
 package com.company;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 public class Reader {
     private String surname;
     private String name;
     private String address;
-    private String []book ;
-    private LocalDate [] dateWhenTook;
-    private int [] days;
-
+    private Book []books;
+    private int numOfBooks = 0;
+    private int MAX_BOOK = 10;
+    public Reader(String name,String surname,String address){
+        this.surname = surname;
+        this.name = name;
+        this.address = address;
+    }
     public void setSurname(String surname){
         this.surname = surname;
     }
@@ -22,17 +27,14 @@ public class Reader {
         this.address = address;
     }
 
-    public void setBook(String aboutBook){
-        if (this.book == null) {
-            this.book = new String[100];
-            this.book[0] = aboutBook;
+    public void setBooks (String bookName, String dateWhenTook, int days) {
+        if (this.books == null) {
+            this.books = new Book[MAX_BOOK];
+            this.books[0] = new Book(bookName,dateWhenTook,days);
         }
-            else
-        this.book[this.book.length] = aboutBook;
-    }
-
-    public void setBookDateTook(LocalDate date){
-        this.dateWhenTook[this.dateWhenTook.length] = date;
+        else
+            this.books[this.numOfBooks]  = new Book(bookName,dateWhenTook,days);
+        numOfBooks++;
     }
 
     public String getSurname(){
@@ -44,18 +46,29 @@ public class Reader {
     }
 
     public String getAddress(){
-        return surname;
+        return this.address;
     }
 
-    public String[] getBook(){
-        return this.book;
+    public Book[] getBook(){
+        return this.books;
     }
 
-    public LocalDate[] getBookDateTook(){
-        return this.dateWhenTook;
+    public int getNumOfBooks(){
+        return this.numOfBooks;
     }
 
-    public int[] getDays(){
-        return this.days;
+
+    public String toString () {
+        String ret =
+                "surname='" + surname + '\'' +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'';
+
+        for (int i = 0; i < this.numOfBooks; i++){
+            ret = ret + '\n' + " book: '" + books[i].getBookName() + '\'' +
+                    " Date when took: '" + books[i].getDateWhenTook() + '\'' +
+                    " Days: '" + books[i].getDays() + '\'' + '\n';
+        }
+    return ret;
     }
 }
