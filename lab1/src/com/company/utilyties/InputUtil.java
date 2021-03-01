@@ -16,7 +16,7 @@ public class InputUtil {
         }
         catch (Throwable e){
             view.printMessage(view.ERROR_DATA);
-            inputDate(view);
+            return inputDate(view);
         }
         return res;
     }

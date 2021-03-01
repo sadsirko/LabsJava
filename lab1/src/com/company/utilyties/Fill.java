@@ -12,10 +12,10 @@ public class Fill {
         dataBase[readers - 1].setBooks("Boratino", "2019-08-16", 1000);
         dataBase[readers - 1].setBooks("Star Wars", "2000-08-16", 100);
         fillAndCreate(readers, dataBase, "Vladimir", "Zelen", "Bankova street");
-        dataBase[readers - 1].setBooks("The world Economy", "2019-08-16", 5000);
+        dataBase[readers - 1].setBooks("The world Economy", "2019-02-11", 5000);
 
         fillAndCreate(readers, dataBase, "Mark", "Zuckerberg", "London, Yelizaveta street");
-        dataBase[readers - 1].setBooks("The world Economy", "2019-08-16", 50);
+        dataBase[readers - 1].setBooks("The world Economy", "2019-07-16", 50);
 
         fillAndCreate(readers, dataBase, "Viktor", "Yanukovich", "Rostov, Podval under the Station");
         dataBase[readers - 1].setBooks("History 7-th class", "2013-12-13", 50);
