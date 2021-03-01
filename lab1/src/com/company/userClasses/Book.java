@@ -1,4 +1,4 @@
-package com.company;
+package com.company.userClasses;
 
 import java.time.LocalDate;
 

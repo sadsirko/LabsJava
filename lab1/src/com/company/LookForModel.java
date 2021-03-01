@@ -1,5 +1,8 @@
 package com.company;
 
+import com.company.userClasses.Reader;
+import com.company.utilyties.Fill;
+
 import java.time.LocalDate;
 
 public class LookForModel {
@@ -11,7 +14,6 @@ public class LookForModel {
     private static int numOfResDebt = 0;
     private static String[] empty;
     private final static int MAX_READERS = 10;
-    private final static int MAX_RES = 10;
     private static int numOfReaders = 0;
 
     public static void InizializeRES(){

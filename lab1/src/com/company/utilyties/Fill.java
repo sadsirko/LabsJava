@@ -1,6 +1,6 @@
-package com.company;
+package com.company.utilyties;
 
-import com.company.Reader;
+import com.company.userClasses.Reader;
 
 import static java.lang.Integer.parseInt;
 
@@ -19,10 +19,7 @@ public class Fill {
 
         fillAndCreate(readers, dataBase, "Viktor", "Yanukovich", "Rostov, Podval under the Station");
         dataBase[readers - 1].setBooks("History 7-th class", "2013-12-13", 50);
-//
-//        System.out.println(dataBase[0].toString());
-//        System.out.println(dataBase[1].toString());
-//        System.out.println(dataBase[2].toString());
+
     }
 
     public static void fillAndCreate (int numOfReader, Reader[] arrR, String name, String surname,

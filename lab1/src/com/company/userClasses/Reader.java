@@ -1,13 +1,12 @@
-package com.company;
+package com.company.userClasses;
 
-import java.time.LocalDate;
-import java.util.Arrays;
+import com.company.userClasses.Book;
 
 public class Reader {
     private String surname;
     private String name;
     private String address;
-    private Book []books;
+    private Book[]books;
     private int numOfBooks = 0;
     private int MAX_BOOK = 10;
     public Reader(String name,String surname,String address){

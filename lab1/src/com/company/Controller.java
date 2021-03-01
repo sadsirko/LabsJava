@@ -1,5 +1,8 @@
 package com.company;
 
+import com.company.utilyties.Fill;
+import com.company.utilyties.InputUtil;
+
 import java.time.LocalDate;
 
 import static java.lang.String.valueOf;
@@ -22,6 +25,9 @@ public class Controller {
                 case "2":
                     view.printMessageFull(view.RESULT_DATA_DEBT,LookForModel.findWhoDebt(),
                             LookForModel.getNumOfResDebt());
+                    break;
+                case "3":
+                    view.printFullDB(LookForModel.getDataBase(), Fill.getReaders());
                     break;
             }
             menu = InputUtil.inputMenu(view);
