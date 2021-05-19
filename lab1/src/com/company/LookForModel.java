@@ -1,36 +1,48 @@
 package com.company;
 
-import com.company.userClasses.Reader;
-import com.company.utilyties.Fill;
+import com.company.userClasses.Readers;
+import com.company.utilyties.DataBaseFill;
+import com.company.utilyties.Streams;
 
+import java.io.*;
 import java.time.LocalDate;
 
 public class LookForModel {
-    private static Reader[] dataBase;
-    private static Reader[] resultDebt;
-    private static Reader[] resultTook;
+    private Readers[] dataBase;
 
-    private static int numOfRes = 0;
-    private static int numOfResDebt = 0;
-    private static String[] empty;
-    private final static int MAX_READERS = 10;
-    private static int numOfReaders = 0;
+    private int numOfRes;
+    private int numOfResDebt;
+    private int MAX_READERS;
 
-    public static void InizializeRES(){
-        resultDebt = new Reader[MAX_READERS];
-        resultTook = new Reader[MAX_READERS];
+    private int numOfReaders;
+
+    LookForModel(int readers){
+        this.numOfRes = 0;
+        this.MAX_READERS = readers;
+        this.numOfReaders = 0;
+        this.numOfResDebt = 0;
     }
 
-    public static void InizializeDB(){
-        dataBase = new Reader[MAX_READERS];
-        new Fill();
-            Fill.createReader(dataBase);
-        numOfReaders = Fill.getReaders();
+    public void InitializeDB(){
+            dataBase = new Readers[MAX_READERS];//db length clean code
+            DataBaseFill.createReader(dataBase);
     }
 
-    public static Reader[] findWhoTook(LocalDate date){
+    public void saveDB(){
+        Streams.serializeDB(dataBase);
+    }
+
+    public void openDB(){
+        dataBase = new Readers[MAX_READERS];
+        dataBase = Streams.deserializeDB(dataBase);
+    }
+
+    public Readers[] findWhoTook(LocalDate date){
+        Readers[] resultTook;
+        resultTook = new Readers[MAX_READERS];
+
         numOfRes = 0;
-        for(int i = 0;i < numOfReaders; i++){
+        for(int i = 0;i < getNumOfReaders(); i++){
             if (dataBase[i].getNumOfBooks() > 0){
                 for (int j = 0; j < dataBase[i].getNumOfBooks();j++){
                     if (dataBase[i].getBook()[j].getDateWhenTook().equals(date)) {
@@ -44,9 +56,11 @@ public class LookForModel {
         return resultTook;
     }
 
-    public static Reader[] findWhoDebt(){
+    public  Readers[] findWhoDebt(){
+        Readers[] resultDebt;
+        resultDebt = new Readers[MAX_READERS];
         numOfResDebt = 0;
-        for(int i = 0;i < numOfReaders; i++){
+        for(int i = 0;i < getNumOfReaders(); i++){
             if (dataBase[i].getNumOfBooks() > 0){
                         for (int j = 0; j < dataBase[i].getNumOfBooks();j++){
                             if (dataBase[i].getBook()[j].getDateWhenTook().plusDays( dataBase[i].getBook()[j].getDays())
@@ -62,14 +76,23 @@ public class LookForModel {
         return resultDebt;
     }
 
+    public void countNumOfReaders() {
+        int cnt = 0;
+        for (Readers name : dataBase) {
+            if (name != null)
+                cnt++;
+        }
+        numOfReaders = cnt;
+    }
 
-    public static int getNumOfRes () {
+    public int getNumOfRes () {
         return numOfRes;
     }
-    public static int getNumOfResDebt () {
+    public int getNumOfResDebt () {
         return numOfResDebt;
     }
-    public static Reader[] getDataBase(){
+    public int getNumOfReaders(){countNumOfReaders();return numOfReaders;}
+    public Readers[] getDataBase(){
         return dataBase;
     }
 }

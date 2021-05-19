@@ -1,15 +1,18 @@
 package com.company.userClasses;
+import java.io.Serializable;
 
-import com.company.userClasses.Book;
-
-public class Reader {
+public class Readers implements Serializable {
     private String surname;
     private String name;
     private String address;
-    private Book[]books;
-    private int numOfBooks = 0;
-    private int MAX_BOOK = 10;
-    public Reader(String name,String surname,String address){
+    private Book[]books;//problems
+    private int numOfBooks;
+    private int amountOfBook;
+
+    public Readers(String name, String surname, String address, int amountOfBook){
+        super();
+        this.amountOfBook = amountOfBook;
+        this.numOfBooks = 0;
         this.surname = surname;
         this.name = name;
         this.address = address;
@@ -28,7 +31,7 @@ public class Reader {
 
     public void setBooks (String bookName, String dateWhenTook, int days) {
         if (this.books == null) {
-            this.books = new Book[MAX_BOOK];
+            this.books = new Book[this.amountOfBook];
             this.books[0] = new Book(bookName,dateWhenTook,days);
         }
         else
@@ -66,7 +69,7 @@ public class Reader {
         for (int i = 0; i < this.numOfBooks; i++){
             ret = ret + '\n' + " book: '" + books[i].getBookName() + '\'' +
                     " Date when took: '" + books[i].getDateWhenTook() + '\'' +
-                    " Days: '" + books[i].getDays() + '\'' + '\n';
+                    " Days: '" + books[i].getDays() + '\'';
         }
     return ret;
     }

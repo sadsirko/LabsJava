@@ -8,29 +8,47 @@ import java.util.Scanner;
 public class InputUtil {
 
     private static Scanner sc = new Scanner(System.in);
-    public static LocalDate inputDate(AdminView view){
+
+    public static LocalDate inputDate(){
         LocalDate res = LocalDate.parse("2000-01-01");
-        view.printMessage(view.INPUT_LOCDATE_DATA_);
-        try {
+        AdminView.printMessage(AdminView.INPUT_LOCDATE_DATA_);
             res = LocalDate.parse(sc.nextLine());
-        }
-        catch (Throwable e){
-            view.printMessage(view.ERROR_DATA);
-            return inputDate(view);
-        }
         return res;
     }
 
-    public static String inputMenu(AdminView view){
+    public static String inputMenu() throws LibraryException{
 
-            view.printMessage(view.MENU);
+            AdminView.printMessage(AdminView.MENU);
             String str = sc.nextLine();
-            boolean a = str.equals(view.FIRST) || str.equals(view.SECOND) || str.equals(view.EXIT)
-                    || str.equals(view.THIRD);
-            while ( !a ){
-                view.printMessage(view.ERROR_DATA);
-                return inputMenu(view);
+            boolean expected_res = str.equals(AdminView.WHO_TOOK_THAT_DATE)
+                    || str.equals(AdminView.WHO_OWED) || str.equals(AdminView.EXIT)
+                    || str.equals(AdminView.FULL_DB) || str.equals(AdminView.ADD_READER)
+                    || str.equals(AdminView.ADD_BOOK);
+            if ( !expected_res ){
+                throw new LibraryException(AdminView.ERROR_DATA);
             }
             return str;
+    }
+
+    public  static Boolean ifSave() throws LibraryException{
+        AdminView.printMessage(AdminView.ASK_FOR_SAVE);
+        String str = sc.nextLine();
+        boolean yes = str.toLowerCase().equals("y");
+        boolean no = str.toLowerCase().equals("n");
+        boolean expected_res = no || yes;
+        if (!expected_res){
+            throw new LibraryException(AdminView.ERROR_DATA);
+        }
+        else {
+            if (yes)
+                return true;
+            else
+                return false;
+        }
+    }
+
+    public static String input(){
+        String res = sc.nextLine();
+        return res;
     }
 }

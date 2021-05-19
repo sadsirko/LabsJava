@@ -1,36 +1,46 @@
 package com.company;
 
-import com.company.utilyties.Fill;
-import com.company.utilyties.InputUtil;
+import com.company.utilyties.Validation;
 
 import java.time.LocalDate;
 
 import static java.lang.String.valueOf;
 
 public class Controller {
+    private static Integer readers;
+    Controller(){
+        readers = 10;
+    }
     public static void creation() {
-        AdminView view = new AdminView();
-        new LookForModel();
-        LookForModel.InizializeDB();
-        LookForModel.InizializeRES();
+        LookForModel model = new LookForModel(readers);
+        Validation val = new Validation();
         String menu = null;
-        menu = InputUtil.inputMenu(view);
-        while (! menu.equals(view.EXIT)){
-            switch (menu){
-                case "1":
-                    LocalDate dateTook = InputUtil.inputDate(view);
-                    view.printMessageFull(view.RESULT_DATA_DATE, LookForModel.findWhoTook(dateTook),
-                            LookForModel.getNumOfRes());
-                    break;
-                case "2":
-                    view.printMessageFull(view.RESULT_DATA_DEBT,LookForModel.findWhoDebt(),
-                            LookForModel.getNumOfResDebt());
-                    break;
-                case "3":
-                    view.printFullDB(LookForModel.getDataBase(), Fill.getReaders());
-                    break;
+        model.openDB();
+//        model.InitializeDB();
+        menu = val.validatedInputMenu();
+        while (! menu.equals(AdminView.EXIT)){
+            switch (menu) {
+                case AdminView.WHO_TOOK_THAT_DATE -> {
+                    LocalDate dateTook = val.validatedInputDate();
+                    AdminView.printMessageFull(AdminView.RESULT_DATA_DATE, model.findWhoTook(dateTook),
+                            model.getNumOfRes());
+                    if (val.validatedAskSave()) val.saveStr(AdminView.getLast_result());
+                }
+                case AdminView.WHO_OWED -> {
+                    AdminView.printMessageFull(AdminView.RESULT_DATA_DEBT, model.findWhoDebt(),
+                            model.getNumOfResDebt());
+                    if (val.validatedAskSave()) val.saveStr(AdminView.getLast_result());
+
+                }
+                case AdminView.FULL_DB ->
+                    AdminView.printMessageFull(model.getDataBase(), model.getNumOfReaders());
+                case AdminView.ADD_READER ->
+                    val.inputFullReader(model.getNumOfReaders(), model.getDataBase());
+                case  AdminView.ADD_BOOK ->
+                        val.inputFullBook(model.getDataBase());
             }
-            menu = InputUtil.inputMenu(view);
+            menu = val.validatedInputMenu();
         }
+        model.saveDB();
     }
 }

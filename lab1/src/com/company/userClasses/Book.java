@@ -1,13 +1,15 @@
 package com.company.userClasses;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Book {
+public class Book implements Serializable {
     private String bookName ;
     private LocalDate dateWhenTook;
     private int days;
 
     public Book(String bookName, String dateWhenTook, int days){
+        super();
         this.bookName = bookName;
         this.dateWhenTook = LocalDate.parse(dateWhenTook);
         this.days = days;
